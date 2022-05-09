@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:5.0.3
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: social_media
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - social-media-network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: social_media
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+    networks:
+      - social-media-network
+
+volumes:
+  db: null
+
+networks:
+  social-media-network:
+    driver: bridge
