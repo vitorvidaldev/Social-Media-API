@@ -1,6 +1,6 @@
 package com.example.social.media.application.service;
 
-import com.example.social.media.domain.entity.Follow;
+import com.example.social.media.domain.entity.Follower;
 import com.example.social.media.domain.vo.post.PostVo;
 import com.example.social.media.domain.vo.profile.ProfileVo;
 import com.example.social.media.domain.vo.user.UserVo;
@@ -25,7 +25,7 @@ class ProfileServiceTest {
     @Mock
     private UserService userService;
     @Mock
-    private FollowService followService;
+    private FollowerService followerService;
     @Mock
     private PostService postService;
 
@@ -35,12 +35,11 @@ class ProfileServiceTest {
         UUID otherUserID = UUID.randomUUID();
 
         UserVo userVoMock = mock(UserVo.class);
-        Follow followMock = mock(Follow.class);
+        Follower followerMock = mock(Follower.class);
         PostVo postVoMock = mock(PostVo.class);
         List<PostVo> postVoList = List.of(postVoMock);
 
         when(userService.findUserById(otherUserID)).thenReturn(userVoMock);
-        when(followService.findFollowByUserId(otherUserID)).thenReturn(followMock);
         when(postService.getUserPosts(otherUserID)).thenReturn(postVoList);
 
         ProfileVo profileData = profileService.getProfileData(loggedUserId, otherUserID);

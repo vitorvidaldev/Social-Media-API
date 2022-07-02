@@ -4,3 +4,4 @@ spring:
       uri: mongodb://social_media:password@localhost:27017/?authSource=admin
       database: social-media
       auto-index-creation: true
+      uuid-representation: standard

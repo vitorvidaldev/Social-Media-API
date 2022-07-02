@@ -13,7 +13,7 @@ A Social Media API, developed with:
 ### Homepage
 
 - The homepage, by default, will show a feed of all posts (including reposts and quote posts).
-- There is a toggle switch "All / following" that allows you to switch between seeing all posts and just posts by those you follow.
+- There is a toggle switch "All / following" that allows you to switch between seeing all posts and just posts by those you follower.
 - New posts can be written from this page.
 
 ### User profile page
@@ -25,10 +25,10 @@ A Social Media API, developed with:
     - Number following
     - Count of number of posts the user has made (including reposts and quote posts)
 - Shows a feed of all posts the user has made (including reposts and quote posts)
-- Shows whether you follow the user or not
+- Shows whether you follower the user or not
 - Follow/unfollow actions:
-    - You can follow the user by clicking "Follow" on their profile
-    - You can unfollow the user by clicking "Unfollow" on their profile
+  - You can follower the user by clicking "Follow" on their profile
+  - You can unfollow the user by clicking "Unfollow" on their profile
 - New posts can be written from this page
 
 ## Instructions to Execute the Project

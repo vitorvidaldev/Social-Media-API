@@ -1,6 +1,5 @@
 package com.example.social.media.application.service;
 
-import com.example.social.media.domain.entity.Follow;
 import com.example.social.media.domain.entity.Post;
 import com.example.social.media.domain.repository.PostRepository;
 import com.example.social.media.domain.vo.post.CreatePostVo;
@@ -56,7 +55,7 @@ class PostServiceTest {
     @Mock
     private UserService userService;
     @Mock
-    private FollowService followService;
+    private FollowerService followerService;
 
     @Test
     void shouldGetAllPostsCorrectly() {
@@ -192,16 +191,5 @@ class PostServiceTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         assertEquals("Post with given id was not found", exception.getReason());
 
-    }
-
-    @Test
-    void shouldGetFollowerPostsCorrectly() {
-        Follow followMock = mock(Follow.class);
-
-        when(followService.findFollowByUserId(userIdMock)).thenReturn(followMock);
-
-        List<PostVo> followerPosts = postService.getFollowerPosts(userIdMock);
-
-        assertNotNull(followerPosts);
     }
 }

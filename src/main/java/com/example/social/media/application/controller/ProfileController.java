@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rest/v1/profile")
+@RequestMapping("/rest/v1/profiles")
 public class ProfileController {
     private final ProfileService profileService;
 

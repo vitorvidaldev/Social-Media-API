@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.validation.constraints.Size;
@@ -14,8 +15,8 @@ import java.util.UUID;
 @Setter
 @Document("post")
 public class Post {
-    @MongoId
-    private UUID id;
+    @MongoId(FieldType.STRING)
+    private UUID postId;
     @Size(max = 777)
     private String postContent;
     @Indexed
@@ -28,12 +29,12 @@ public class Post {
     public Post() {
     }
 
-    public Post(UUID id) {
-        this.id = id;
+    public Post(UUID postId) {
+        this.postId = postId;
     }
 
     public Post(String postContent, UUID writerId, String writerName, boolean isRepost, String quote) {
-        this.id = UUID.randomUUID();
+        this.postId = UUID.randomUUID();
         this.postContent = postContent;
         this.writerId = writerId;
         this.creationDate = LocalDateTime.now();

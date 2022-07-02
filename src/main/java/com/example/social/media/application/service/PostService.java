@@ -1,6 +1,5 @@
 package com.example.social.media.application.service;
 
-import com.example.social.media.domain.entity.Follow;
 import com.example.social.media.domain.entity.Post;
 import com.example.social.media.domain.repository.PostRepository;
 import com.example.social.media.domain.vo.post.CreatePostVo;
@@ -15,17 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
-public record PostService(PostRepository postRepository, UserService userService, FollowService followService) {
+public record PostService(PostRepository postRepository, UserService userService, FollowerService followerService) {
 
     public List<PostVo> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         List<PostVo> postVoList = new ArrayList<>();
         for (Post post : posts) {
             postVoList.add(new PostVo(
-                    post.getId(),
+                    post.getPostId(),
                     post.getPostContent(),
                     post.getWriterName(),
                     post.getCreationDate(),
@@ -48,7 +46,7 @@ public record PostService(PostRepository postRepository, UserService userService
                     createPostVo.isRepost(),
                     createPostVo.getQuote()));
             return new PostVo(
-                    post.getId(),
+                    post.getPostId(),
                     post.getPostContent(),
                     user.username(),
                     post.getCreationDate(),
@@ -80,7 +78,7 @@ public record PostService(PostRepository postRepository, UserService userService
         List<PostVo> postVoList = new ArrayList<>();
         for (Post post : optionalPostList.get()) {
             postVoList.add(new PostVo(
-                    post.getId(),
+                    post.getPostId(),
                     post.getPostContent(),
                     post.getWriterName(),
                     post.getCreationDate(),
@@ -108,8 +106,9 @@ public record PostService(PostRepository postRepository, UserService userService
     }
 
     public List<PostVo> getFollowerPosts(UUID userId) {
-        Follow userFollowData = followService.findFollowByUserId(userId);
-        List<PostVo> allPosts = getAllPosts();
-        return allPosts.stream().filter(post -> userFollowData.getUserFollows().contains(post.getUserId())).collect(Collectors.toList());
+//        Follower userFollowerData = followerService.findFollowByUserId(userId);
+//        List<PostVo> allPosts = getAllPosts();
+//        return allPosts.stream().filter(post -> userFollowerData.getUserFollows().contains(post.getUserId())).collect(Collectors.toList());
+        return null;
     }
 }
