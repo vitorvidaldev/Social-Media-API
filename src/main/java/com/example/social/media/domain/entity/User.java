@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 public class User {
     @Size(max = 14)
-    @Pattern(regexp = "[a-zA-Z0-9]*")
+    @Pattern(regexp = "[a-zA-Z\\d]*")
     private String username;
     private LocalDateTime signupDate;
     private UUID userId;
@@ -20,9 +20,9 @@ public class User {
     public User() {
     }
 
-    public User(String username, String uuid) {
+    public User(String username) {
         this.username = username;
-        this.userId = UUID.fromString(uuid);
+        this.userId = UUID.randomUUID();
         this.signupDate = LocalDateTime.now();
     }
 }

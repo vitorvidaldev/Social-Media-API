@@ -26,9 +26,9 @@ class UserControllerTest {
     @Test
     public void shouldGetUserDataCorrectly() {
         UserVo userVoMock = mock(UserVo.class);
-        String userIdMock = UUID.randomUUID().toString();
+        UUID userIdMock = UUID.randomUUID();
 
-        when(userService.getUserData(userIdMock)).thenReturn(userVoMock);
+        when(userService.findUserById(userIdMock)).thenReturn(userVoMock);
 
         ResponseEntity<UserVo> response = userController.getUserData(userIdMock);
 
@@ -36,7 +36,7 @@ class UserControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(userVoMock, response.getBody());
 
-        verify(userService).getUserData(userIdMock);
+        verify(userService).findUserById(userIdMock);
     }
 
     @Test
@@ -57,7 +57,7 @@ class UserControllerTest {
 
     @Test
     public void shouldDeleteUserCorrectly() {
-        String userIdMock = UUID.randomUUID().toString();
+        UUID userIdMock = UUID.randomUUID();
 
         doNothing().when(userService).deleteUser(userIdMock);
 

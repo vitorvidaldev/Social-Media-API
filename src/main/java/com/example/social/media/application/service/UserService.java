@@ -27,15 +27,12 @@ public record UserService(UserRepository userRepository) {
                 optionalUser.get().getSignupDate());
     }
 
-    public UserVo getUserData(String userId) {
-        return null;
-    }
-
     public UserVo createUser(CreateUserVo createUserVo) {
-        return null;
+        User user = userRepository.save(new User(createUserVo.username()));
+        return new UserVo(user.getUsername(), user.getUserId(), user.getSignupDate());
     }
 
-    public void deleteUser(String userId) {
-
+    public void deleteUser(UUID userId) {
+        userRepository.deleteById(userId);
     }
 }

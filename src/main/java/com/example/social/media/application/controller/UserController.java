@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/rest/v1/user")
 public class UserController {
@@ -17,8 +19,8 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserVo> getUserData(@PathVariable(value = "userId") String userId) {
-        UserVo userVo = userService.getUserData(userId);
+    public ResponseEntity<UserVo> getUserData(@PathVariable(value = "userId") UUID userId) {
+        UserVo userVo = userService.findUserById(userId);
         return ResponseEntity.ok().body(userVo);
     }
 
@@ -29,7 +31,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteUser(@PathVariable(value = "userId") String userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable(value = "userId") UUID userId) {
         userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }

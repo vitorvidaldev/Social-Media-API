@@ -1,7 +1,6 @@
 package com.example.social.media.application.service;
 
 import com.example.social.media.domain.vo.user.UserVo;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +12,6 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 @ExtendWith(SpringExtension.class)
 class UserServiceTest {
 
