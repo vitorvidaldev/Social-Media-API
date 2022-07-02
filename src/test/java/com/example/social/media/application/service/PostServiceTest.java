@@ -3,9 +3,9 @@ package com.example.social.media.application.service;
 import com.example.social.media.domain.entity.Follow;
 import com.example.social.media.domain.entity.Post;
 import com.example.social.media.domain.repository.PostRepository;
-import com.example.social.media.domain.vo.CreatePostVo;
-import com.example.social.media.domain.vo.PostVo;
-import com.example.social.media.domain.vo.UserVo;
+import com.example.social.media.domain.vo.post.CreatePostVo;
+import com.example.social.media.domain.vo.post.PostVo;
+import com.example.social.media.domain.vo.user.UserVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,8 +28,8 @@ import static org.mockito.Mockito.when;
 class PostServiceTest {
     private final UUID userIdMock = UUID.randomUUID();
     private final UserVo userVoMock = new UserVo(
-            userIdMock,
             "Test user",
+            userIdMock,
             LocalDateTime.now());
     private final Post postMock = new Post(
             "Test content",

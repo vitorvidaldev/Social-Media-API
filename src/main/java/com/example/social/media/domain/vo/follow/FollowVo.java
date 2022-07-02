@@ -1,4 +1,4 @@
-package com.example.social.media.domain.vo;
+package com.example.social.media.domain.vo.follow;
 
 import lombok.Getter;
 import lombok.Setter;

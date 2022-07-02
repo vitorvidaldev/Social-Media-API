@@ -1,7 +1,7 @@
 package com.example.social.media.application.controller;
 
 import com.example.social.media.application.service.ProfileService;
-import com.example.social.media.domain.vo.ProfileVo;
+import com.example.social.media.domain.vo.profile.ProfileVo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

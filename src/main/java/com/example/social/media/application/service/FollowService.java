@@ -2,8 +2,8 @@ package com.example.social.media.application.service;
 
 import com.example.social.media.domain.entity.Follow;
 import com.example.social.media.domain.repository.FollowRepository;
-import com.example.social.media.domain.vo.FollowVo;
-import com.example.social.media.domain.vo.FollowerVo;
+import com.example.social.media.domain.vo.follow.FollowVo;
+import com.example.social.media.domain.vo.follow.FollowerVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,13 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class FollowService {
-
-    private final FollowRepository followRepository;
-
-    public FollowService(FollowRepository followRepository) {
-        this.followRepository = followRepository;
-    }
+public record FollowService(FollowRepository followRepository) {
 
     public FollowVo followUser(UUID userId, FollowerVo followerVo) {
         if (userId.equals(followerVo.getFollowerId())) {

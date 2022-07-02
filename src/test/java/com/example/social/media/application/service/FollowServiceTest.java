@@ -2,8 +2,8 @@ package com.example.social.media.application.service;
 
 import com.example.social.media.domain.entity.Follow;
 import com.example.social.media.domain.repository.FollowRepository;
-import com.example.social.media.domain.vo.FollowVo;
-import com.example.social.media.domain.vo.FollowerVo;
+import com.example.social.media.domain.vo.follow.FollowVo;
+import com.example.social.media.domain.vo.follow.FollowerVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

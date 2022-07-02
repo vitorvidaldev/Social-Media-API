@@ -3,9 +3,9 @@ package com.example.social.media.application.service;
 import com.example.social.media.domain.entity.Follow;
 import com.example.social.media.domain.entity.Post;
 import com.example.social.media.domain.repository.PostRepository;
-import com.example.social.media.domain.vo.CreatePostVo;
-import com.example.social.media.domain.vo.PostVo;
-import com.example.social.media.domain.vo.UserVo;
+import com.example.social.media.domain.vo.post.CreatePostVo;
+import com.example.social.media.domain.vo.post.PostVo;
+import com.example.social.media.domain.vo.user.UserVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,16 +18,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class PostService {
-    private final PostRepository postRepository;
-    private final UserService userService;
-    private final FollowService followService;
-
-    public PostService(PostRepository postRepository, UserService userService, FollowService followService) {
-        this.postRepository = postRepository;
-        this.userService = userService;
-        this.followService = followService;
-    }
+public record PostService(PostRepository postRepository, UserService userService, FollowService followService) {
 
     public List<PostVo> getAllPosts() {
         List<Post> posts = postRepository.findAll();
@@ -53,13 +44,13 @@ public class PostService {
             Post post = postRepository.save(new Post(
                     createPostVo.getContent(),
                     userId,
-                    user.getUsername(),
+                    user.username(),
                     createPostVo.isRepost(),
                     createPostVo.getQuote()));
             return new PostVo(
                     post.getId(),
                     post.getPostContent(),
-                    user.getUsername(),
+                    user.username(),
                     post.getCreationDate(),
                     post.isRepost(),
                     post.getQuote(),
@@ -69,7 +60,7 @@ public class PostService {
     }
 
     private List<PostVo> getUserPostsFromLast24Hours(UserVo user) {
-        List<PostVo> userPosts = getUserPosts(user.getUserId());
+        List<PostVo> userPosts = getUserPosts(user.userId());
         List<PostVo> postVoList = new ArrayList<>();
         for (PostVo postVo : userPosts) {
             if (postVo.getCreationDate().isAfter(LocalDateTime.now().minusDays(1))) {

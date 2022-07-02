@@ -1,7 +1,7 @@
 package com.example.social.media.application.controller;
 
 import com.example.social.media.application.service.ProfileService;
-import com.example.social.media.domain.vo.ProfileVo;
+import com.example.social.media.domain.vo.profile.ProfileVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

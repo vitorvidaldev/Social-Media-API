@@ -1,8 +1,8 @@
 package com.example.social.media.application.controller;
 
 import com.example.social.media.application.service.FollowService;
-import com.example.social.media.domain.vo.FollowVo;
-import com.example.social.media.domain.vo.FollowerVo;
+import com.example.social.media.domain.vo.follow.FollowVo;
+import com.example.social.media.domain.vo.follow.FollowerVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

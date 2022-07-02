@@ -2,10 +2,11 @@
 
 A Social Media API, developed with:
 
-- Java 11 or higher
+- Java 17
 - Maven
 - Docker
 - Docker Compose
+- MongoDB
 
 ## Features
 

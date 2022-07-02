@@ -1,8 +1,8 @@
 package com.example.social.media.application.controller;
 
 import com.example.social.media.application.service.PostService;
-import com.example.social.media.domain.vo.CreatePostVo;
-import com.example.social.media.domain.vo.PostVo;
+import com.example.social.media.domain.vo.post.CreatePostVo;
+import com.example.social.media.domain.vo.post.PostVo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

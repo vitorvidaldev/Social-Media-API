@@ -1,9 +1,9 @@
 package com.example.social.media.application.service;
 
 import com.example.social.media.domain.entity.Follow;
-import com.example.social.media.domain.vo.PostVo;
-import com.example.social.media.domain.vo.ProfileVo;
-import com.example.social.media.domain.vo.UserVo;
+import com.example.social.media.domain.vo.post.PostVo;
+import com.example.social.media.domain.vo.profile.ProfileVo;
+import com.example.social.media.domain.vo.user.UserVo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,6 +46,6 @@ class ProfileServiceTest {
         ProfileVo profileData = profileService.getProfileData(loggedUserId, otherUserID);
 
         assertNotNull(profileData);
-        assertEquals(postVoList.size(), profileData.getNumberOfPosts());
+        assertEquals(postVoList.size(), profileData.numberOfPosts());
     }
 }
