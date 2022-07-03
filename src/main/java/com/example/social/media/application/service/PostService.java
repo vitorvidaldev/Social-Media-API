@@ -104,11 +104,4 @@ public record PostService(PostRepository postRepository, UserService userService
         }
         return createNewPost(userId, new CreatePostVo(optionalPost.get().getPostContent(), false, quoteVo.getQuote()));
     }
-
-    public List<PostVo> getFollowerPosts(UUID userId) {
-//        Follower userFollowerData = followerService.findFollowByUserId(userId);
-//        List<PostVo> allPosts = getAllPosts();
-//        return allPosts.stream().filter(post -> userFollowerData.getUserFollows().contains(post.getUserId())).collect(Collectors.toList());
-        return null;
-    }
 }

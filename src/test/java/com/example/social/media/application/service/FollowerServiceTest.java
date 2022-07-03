@@ -136,18 +136,15 @@ class FollowerServiceTest {
         Follower followerMock = mock(Follower.class);
 
         when(followerMock.getFollowerId()).thenReturn(followerIdMock);
-        when(followerMock.getUserId()).thenReturn(userIdMock);
 
         when(followerRepository.findByUserId(userIdMock)).thenReturn(List.of(followerMock));
 
-        List<FollowerVo> followerList = followerService.getFollowerList(userIdMock);
+        List<String> followerList = followerService.getFollowerList(userIdMock);
 
         assertNotNull(followerList);
-        assertEquals(followerIdMock, followerList.get(0).followerId());
-        assertEquals(userIdMock, followerList.get(0).userId());
+        assertEquals(followerIdMock.toString(), followerList.get(0));
 
         verify(followerRepository).findByUserId(userIdMock);
         verify(followerMock).getFollowerId();
-        verify(followerMock).getUserId();
     }
 }

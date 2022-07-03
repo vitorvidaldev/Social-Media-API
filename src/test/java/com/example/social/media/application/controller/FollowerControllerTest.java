@@ -27,16 +27,16 @@ class FollowerControllerTest {
     @Test
     public void shouldGetFollowerList() {
         UUID userIdMock = UUID.randomUUID();
-        FollowerVo followerVoMock = mock(FollowerVo.class);
+        UUID followerIdMock = UUID.randomUUID();
 
-        when(followerService.getFollowerList(userIdMock)).thenReturn(List.of(followerVoMock));
+        when(followerService.getFollowerList(userIdMock)).thenReturn(List.of(followerIdMock.toString()));
 
-        ResponseEntity<List<FollowerVo>> response = followerController.getFollowerList(userIdMock);
+        ResponseEntity<List<String>> response = followerController.getFollowerList(userIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(followerVoMock, response.getBody().get(0));
+        assertEquals(followerIdMock.toString(), response.getBody().get(0));
 
         verify(followerService).getFollowerList(userIdMock);
     }

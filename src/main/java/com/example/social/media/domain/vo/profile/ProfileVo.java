@@ -6,8 +6,6 @@ public record ProfileVo(
         String username,
         LocalDateTime creationDate,
         int numberOfFollowers,
-        int numberOfFollows,
-        int numberOfPosts,
-        boolean isFollowing
+        int numberOfPosts
 ) {
 }

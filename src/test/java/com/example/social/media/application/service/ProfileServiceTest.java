@@ -1,6 +1,5 @@
 package com.example.social.media.application.service;
 
-import com.example.social.media.domain.entity.Follower;
 import com.example.social.media.domain.vo.post.PostVo;
 import com.example.social.media.domain.vo.profile.ProfileVo;
 import com.example.social.media.domain.vo.user.UserVo;
@@ -31,18 +30,16 @@ class ProfileServiceTest {
 
     @Test
     void shouldGetProfileDataCorrectly() {
-        UUID loggedUserId = UUID.randomUUID();
-        UUID otherUserID = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
 
         UserVo userVoMock = mock(UserVo.class);
-        Follower followerMock = mock(Follower.class);
         PostVo postVoMock = mock(PostVo.class);
         List<PostVo> postVoList = List.of(postVoMock);
 
-        when(userService.findUserById(otherUserID)).thenReturn(userVoMock);
-        when(postService.getUserPosts(otherUserID)).thenReturn(postVoList);
+        when(userService.findUserById(userId)).thenReturn(userVoMock);
+        when(postService.getUserPosts(userId)).thenReturn(postVoList);
 
-        ProfileVo profileData = profileService.getProfileData(loggedUserId, otherUserID);
+        ProfileVo profileData = profileService.getProfileData(userId);
 
         assertNotNull(profileData);
         assertEquals(postVoList.size(), profileData.numberOfPosts());

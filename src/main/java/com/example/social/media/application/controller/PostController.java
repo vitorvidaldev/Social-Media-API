@@ -33,12 +33,6 @@ public class PostController {
         return ResponseEntity.ok().body(postVoList);
     }
 
-    @GetMapping("/follow/{userId}")
-    public ResponseEntity<List<PostVo>> getFollowerPosts(@PathVariable(value = "userId") UUID userId) {
-        List<PostVo> postVoList = postService.getFollowerPosts(userId);
-        return ResponseEntity.ok().body(postVoList);
-    }
-
     @PostMapping("/{userId}")
     public ResponseEntity<PostVo> createNewPost(
             @PathVariable(value = "userId") UUID userId,

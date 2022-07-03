@@ -31,9 +31,9 @@ class ProfileControllerTest {
         ProfileVo profileVoMock = mock(ProfileVo.class);
 
         // when
-        when(profileService.getProfileData(loggedUserId, otherUserId)).thenReturn(profileVoMock);
+        when(profileService.getProfileData(otherUserId)).thenReturn(profileVoMock);
         // then
-        ResponseEntity<ProfileVo> response = profileController.getProfileData(loggedUserId, otherUserId);
+        ResponseEntity<ProfileVo> response = profileController.getProfileData(otherUserId);
         // assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }

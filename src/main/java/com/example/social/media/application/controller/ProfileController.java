@@ -19,11 +19,9 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping("/{loggedUserId}/{userId}")
-    public ResponseEntity<ProfileVo> getProfileData(
-            @PathVariable(value = "loggedUserId") UUID loggedUserId,
-            @PathVariable(value = "userId") UUID otherUserId) {
-        ProfileVo profileVo = profileService.getProfileData(loggedUserId, otherUserId);
+    @GetMapping("/{userId}")
+    public ResponseEntity<ProfileVo> getProfileData(@PathVariable(value = "userId") UUID userId) {
+        ProfileVo profileVo = profileService.getProfileData(userId);
         return ResponseEntity.ok().body(profileVo);
     }
 }

@@ -22,8 +22,8 @@ public class FollowerController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<FollowerVo>> getFollowerList(@PathVariable(value = "userId") UUID userId) {
-        List<FollowerVo> followerList = followerService.getFollowerList(userId);
+    public ResponseEntity<List<String>> getFollowerList(@PathVariable(value = "userId") UUID userId) {
+        List<String> followerList = followerService.getFollowerList(userId);
         return ResponseEntity.ok().body(followerList);
     }
 

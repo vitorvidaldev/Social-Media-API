@@ -51,17 +51,6 @@ class PostControllerTest {
     }
 
     @Test
-    void shouldGetFollowerPostsCorrectly() {
-        PostVo postVoMock = mock(PostVo.class);
-        List<PostVo> postVoListMock = List.of(postVoMock);
-
-        when(postService.getFollowerPosts(loggedUserId)).thenReturn(postVoListMock);
-        ResponseEntity<List<PostVo>> response = postController.getFollowerPosts(loggedUserId);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    @Test
     void shouldCreateNewPostCorrectly() {
         CreatePostVo createPostVoMock = mock(CreatePostVo.class);
         PostVo postVoMock = mock(PostVo.class);

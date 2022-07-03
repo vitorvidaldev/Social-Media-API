@@ -34,11 +34,8 @@ public record FollowerService(FollowerRepository followerRepository) {
         followerRepository.deleteByUserIdAndFollowerId(userId, setFollowerVo.followerId());
     }
 
-    public List<FollowerVo> getFollowerList(UUID userId) {
+    public List<String> getFollowerList(UUID userId) {
         List<Follower> followerList = followerRepository.findByUserId(userId);
-        return followerList.stream().map(follower -> new FollowerVo(
-                follower.getUserId(),
-                follower.getFollowerId()
-        )).toList();
+        return followerList.stream().map(follower -> follower.getFollowerId().toString()).toList();
     }
 }
