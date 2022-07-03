@@ -12,73 +12,142 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class FollowerServiceTest {
-
-    private final UUID userIdMock = UUID.randomUUID();
-    private final SetFollowerVo setFollowerVoMock = new SetFollowerVo(UUID.randomUUID());
     @InjectMocks
     private FollowerService followerService;
     @Mock
     private FollowerRepository followerRepository;
 
     @Test
-    void shouldFollowUserCorrectly() {
+    public void shouldFollowUserCorrectly() {
+        UUID userIdMock = UUID.randomUUID();
+        UUID followerIdMock = UUID.randomUUID();
+        SetFollowerVo setFollowerVoMock = mock(SetFollowerVo.class);
         Follower followerMock = mock(Follower.class);
-        Optional<Follower> optionalFollowMock = Optional.of(followerMock);
 
-        when(followerRepository.findById(userIdMock)).thenReturn(optionalFollowMock);
-        when(followerRepository.save(followerMock)).thenReturn(followerMock);
+        when(setFollowerVoMock.followerId()).thenReturn(followerIdMock);
+
+        when(followerMock.getFollowerId()).thenReturn(followerIdMock);
+        when(followerMock.getUserId()).thenReturn(userIdMock);
+
+        when(followerRepository.save(any(Follower.class))).thenReturn(followerMock);
 
         FollowerVo followerVo = followerService.followUser(userIdMock, setFollowerVoMock);
 
         assertNotNull(followerVo);
         assertEquals(userIdMock, followerVo.userId());
-        assertEquals(setFollowerVoMock.followerId(), followerVo.followerId());
+        assertEquals(followerIdMock, followerVo.followerId());
+
+        verify(followerRepository).save(any(Follower.class));
+        verify(setFollowerVoMock, times(2)).followerId();
+        verify(followerMock).getFollowerId();
+        verify(followerMock).getUserId();
     }
 
     @Test
-    void shouldThrowBadRequestExceptionFollowingItself() {
-        Follower followerMock = mock(Follower.class);
-        Optional<Follower> optionalFollowMock = Optional.of(followerMock);
+    public void shouldThrowBadRequestExceptionFollowingYourself() {
+        UUID userIdMock = UUID.randomUUID();
+        SetFollowerVo setFollowerVo = mock(SetFollowerVo.class);
 
-        SetFollowerVo setFollowerVoMock = new SetFollowerVo(userIdMock);
+        when(setFollowerVo.followerId()).thenReturn(userIdMock);
 
-
-        when(followerRepository.findById(userIdMock)).thenReturn(optionalFollowMock);
-        when(followerRepository.save(followerMock)).thenReturn(followerMock);
-
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
-                () -> followerService.followUser(userIdMock, setFollowerVoMock));
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> followerService.followUser(userIdMock, setFollowerVo)
+        );
 
         assertNotNull(exception);
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
         assertEquals("You can't follow yourself", exception.getReason());
+
+        verify(setFollowerVo).followerId();
     }
 
     @Test
-    void shouldThrowBadRequestExceptionUnfollowingItself() {
-        Follower followerMock = mock(Follower.class);
-        Optional<Follower> optionalFollowMock = Optional.of(followerMock);
+    public void shouldThrowBadRequestFollowingUserAgain() {
+        UUID userIdMock = UUID.randomUUID();
+        UUID followerIdMock = UUID.randomUUID();
+        SetFollowerVo setFollowerVoMock = mock(SetFollowerVo.class);
 
-        SetFollowerVo setFollowerVoMock = new SetFollowerVo(userIdMock);
+        when(setFollowerVoMock.followerId()).thenReturn(followerIdMock);
 
+        when(followerRepository.save(any(Follower.class))).thenThrow(RuntimeException.class);
 
-        when(followerRepository.findById(userIdMock)).thenReturn(optionalFollowMock);
-        when(followerRepository.save(followerMock)).thenReturn(followerMock);
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> followerService.followUser(userIdMock, setFollowerVoMock)
+        );
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class,
-                () -> followerService.unfollowUser(userIdMock, setFollowerVoMock));
+        assertNotNull(exception);
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertEquals("You already follow this user", exception.getReason());
+
+        verify(setFollowerVoMock, times(2)).followerId();
+        verify(followerRepository).save(any(Follower.class));
+    }
+
+    @Test
+    public void shouldUnfollowUserCorrectly() {
+        UUID userIdMock = UUID.randomUUID();
+        UUID followerIdMock = UUID.randomUUID();
+        SetFollowerVo setFollowerVoMock = mock(SetFollowerVo.class);
+
+        when(setFollowerVoMock.followerId()).thenReturn(followerIdMock);
+
+        doNothing().when(followerRepository).deleteByUserIdAndFollowerId(userIdMock, followerIdMock);
+
+        assertDoesNotThrow(() -> followerService.unfollowUser(userIdMock, setFollowerVoMock));
+
+        verify(setFollowerVoMock, times(2)).followerId();
+        verify(followerRepository).deleteByUserIdAndFollowerId(userIdMock, followerIdMock);
+    }
+
+    @Test
+    public void shouldThrowBadRequestExceptionUnfollowingYourself() {
+        UUID userIdMock = UUID.randomUUID();
+        SetFollowerVo setFollowerVoMock = mock(SetFollowerVo.class);
+
+        when(setFollowerVoMock.followerId()).thenReturn(userIdMock);
+
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> followerService.unfollowUser(userIdMock, setFollowerVoMock)
+        );
 
         assertNotNull(exception);
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
         assertEquals("You can't unfollow yourself", exception.getReason());
+
+        verify(setFollowerVoMock).followerId();
+    }
+
+    @Test
+    public void shouldGetFollowerListCorrectly() {
+        UUID userIdMock = UUID.randomUUID();
+        UUID followerIdMock = UUID.randomUUID();
+        Follower followerMock = mock(Follower.class);
+
+        when(followerMock.getFollowerId()).thenReturn(followerIdMock);
+        when(followerMock.getUserId()).thenReturn(userIdMock);
+
+        when(followerRepository.findByUserId(userIdMock)).thenReturn(List.of(followerMock));
+
+        List<FollowerVo> followerList = followerService.getFollowerList(userIdMock);
+
+        assertNotNull(followerList);
+        assertEquals(followerIdMock, followerList.get(0).followerId());
+        assertEquals(userIdMock, followerList.get(0).userId());
+
+        verify(followerRepository).findByUserId(userIdMock);
+        verify(followerMock).getFollowerId();
+        verify(followerMock).getUserId();
     }
 }
